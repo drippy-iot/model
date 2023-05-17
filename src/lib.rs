@@ -20,9 +20,7 @@ pub enum Payload {
     /// metro reading conflicts with that of the tap.
     Conflict,
     /// This message is a ping from the unit on the detected flow rate.
-    Flow {
-        ticks: u64,
-    },
+    Flow { ticks: u64 },
 }
 
 /// A unit of message sent to the Cloud server.

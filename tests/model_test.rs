@@ -1,5 +1,4 @@
-use bitcode::{decode, encode};
-use model::{Header, Message, Payload};
+use model::{decode, encode, Header, Message, Payload};
 
 #[cfg(test)]
 #[test]

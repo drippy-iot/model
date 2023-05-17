@@ -28,6 +28,6 @@ pub enum Payload {
 /// A unit of message sent to the Cloud server.
 #[derive(Decode, Encode)]
 pub struct Message {
-    head: Header,
-    data: Payload,
+    pub head: Header,
+    pub data: Payload,
 }

@@ -9,9 +9,9 @@ pub type MacAddress = [u8; 6];
 #[derive(Decode, Encode)]
 pub struct Header {
     /// MAC address of the packet as a (sufficently) unique ID.
-    mac: MacAddress,
+    pub mac: MacAddress,
     /// Number of seconds since the UNIX epoch.
-    timestamp: u64,
+    pub timestamp: u64,
 }
 
 #[derive(Decode, Encode)]

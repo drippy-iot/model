@@ -1,6 +1,5 @@
 use model::{decode, encode, Header, Message, Payload};
 
-#[cfg(test)]
 #[test]
 fn test_leak_report_1() {
     // Test the data model with a Conflict payload

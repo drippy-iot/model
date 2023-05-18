@@ -6,7 +6,7 @@ use bitcode::{Decode, Encode};
 /// Media Access Control address.
 pub type MacAddress = [u8; 6];
 
-#[derive(Decode, Encode)]
+#[derive(Debug, Decode, Encode)]
 pub struct Header {
     /// MAC address of the packet as a (sufficently) unique ID.
     pub mac: MacAddress,
@@ -14,7 +14,7 @@ pub struct Header {
     pub timestamp: u64,
 }
 
-#[derive(Decode, Encode)]
+#[derive(Debug, Decode, Encode)]
 pub enum Payload {
     /// This message informs the Cloud server that the
     /// metro reading conflicts with that of the tap.
@@ -24,7 +24,7 @@ pub enum Payload {
 }
 
 /// A unit of message sent to the Cloud server.
-#[derive(Decode, Encode)]
+#[derive(Debug, Decode, Encode)]
 pub struct Message {
     pub head: Header,
     pub data: Payload,

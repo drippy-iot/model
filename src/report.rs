@@ -1,4 +1,5 @@
 use bitcode::{Decode, Encode};
+use core::fmt;
 
 /// Media Access Control address.
 pub type MacAddress = [u8; 6];
@@ -10,6 +11,13 @@ pub type MacAddress = [u8; 6];
 pub struct Ping {
     /// MAC address of the packet as a (sufficently) unique ID.
     pub mac: MacAddress,
+}
+
+impl fmt::Display for Ping {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let [a, b, c, d, e, f] = self.mac;
+        write!(fmt, "{a:x}:{b:x}:{c:x}:{d:x}:{e:x}:{f:x}")
+    }
 }
 
 /// This message is a ping from the unit on the detected flow rate.

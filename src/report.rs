@@ -1,3 +1,6 @@
+#[cfg(feature = "sql")]
+use postgres_types::{private::BytesMut, FromSql, IsNull, ToSql, Type as PsqlType};
+
 use bitcode::{Decode, Encode};
 use core::fmt;
 
@@ -18,6 +21,40 @@ impl fmt::Display for Ping {
         let [a, b, c, d, e, f] = self.mac;
         write!(fmt, "{a:x}:{b:x}:{c:x}:{d:x}:{e:x}:{f:x}")
     }
+}
+
+#[cfg(feature = "sql")]
+impl<'a> FromSql<'a> for Ping {
+    fn from_sql(
+        ty: &PsqlType,
+        raw: &'a [u8],
+    ) -> Result<Self, Box<dyn std::error::Error + Sync + Send>> {
+        assert_eq!(*ty, PsqlType::MACADDR);
+        let mut mac = [0; 6];
+        mac.copy_from_slice(raw);
+        Ok(Self { mac })
+    }
+
+    postgres_types::accepts!(MACADDR);
+}
+
+#[cfg(feature = "sql")]
+impl ToSql for Ping {
+    fn to_sql(
+        &self,
+        ty: &PsqlType,
+        out: &mut BytesMut,
+    ) -> Result<IsNull, Box<dyn std::error::Error + Sync + Send>>
+    where
+        Self: Sized,
+    {
+        out.extend_from_slice(self.mac.as_ref());
+        assert_eq!(*ty, PsqlType::MACADDR);
+        Ok(IsNull::No)
+    }
+
+    postgres_types::accepts!(MACADDR);
+    postgres_types::to_sql_checked!();
 }
 
 /// This message is a ping from the unit on the detected flow rate.

@@ -1,4 +1,4 @@
-#![no_std]
+#![cfg_attr(not(feature = "report"), no_std)]
 
 #[cfg(feature = "report")]
 pub mod report;

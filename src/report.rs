@@ -20,5 +20,5 @@ pub struct Flow {
     /// Detected flow rate measured in revolutions per second
     /// (according to the water flow sensor).
     #[bitcode_hint(expected_range = "0..16384")]
-    pub flow: u32,
+    pub flow: u16,
 }

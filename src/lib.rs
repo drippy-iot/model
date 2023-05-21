@@ -1,11 +1,12 @@
-#![cfg_attr(not(feature = "report"), no_std)]
+#![cfg_attr(not(feature = "sql"), no_std)]
 
 #[cfg(feature = "report")]
 pub mod report;
 
-#[cfg(any(feature = "report"))]
+#[cfg(feature = "report")]
 pub use bitcode::{decode, encode};
 
+#[cfg(feature = "report")]
 use bitcode::{Decode, Encode};
 use core::fmt;
 
@@ -13,7 +14,8 @@ use core::fmt;
 use postgres_types::{private::BytesMut, FromSql, IsNull, ToSql, Type as PsqlType};
 
 /// Media Access Control
-#[derive(Debug, Decode, Encode, PartialEq, Eq)]
+#[cfg_attr(feature = "report", derive(Decode, Encode))]
+#[derive(Debug, PartialEq, Eq)]
 pub struct MacAddress(pub [u8; 6]);
 
 impl fmt::Display for MacAddress {

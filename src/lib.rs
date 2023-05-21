@@ -14,7 +14,7 @@ use postgres_types::{private::BytesMut, FromSql, IsNull, ToSql, Type as PsqlType
 
 /// Media Access Control
 #[derive(Debug, Decode, Encode, PartialEq, Eq)]
-pub struct MacAddress([u8; 6]);
+pub struct MacAddress(pub [u8; 6]);
 
 impl fmt::Display for MacAddress {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {

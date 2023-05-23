@@ -7,6 +7,5 @@ pub struct Flow {
     pub addr: crate::MacAddress,
     /// Detected flow rate measured in revolutions per second
     /// (according to the water flow sensor).
-    #[bitcode_hint(expected_range = "0..16384")]
     pub flow: u16,
 }

@@ -4,10 +4,8 @@
 pub mod report;
 
 #[cfg(feature = "report")]
-pub use bitcode::{decode, encode};
+pub use bitcode::{decode, encode, Decode, Encode};
 
-#[cfg(feature = "report")]
-use bitcode::{Decode, Encode};
 use core::fmt;
 
 #[cfg(feature = "sql")]

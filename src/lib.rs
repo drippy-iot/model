@@ -6,7 +6,7 @@ pub mod report;
 #[cfg(feature = "report")]
 pub use bitcode::{decode, encode, Decode, Encode};
 
-use core::fmt;
+use core::{fmt, num::ParseIntError, str::FromStr};
 
 #[cfg(feature = "sql")]
 use postgres_types::{private::BytesMut, FromSql, IsNull, ToSql, Type as PsqlType};
@@ -15,6 +15,18 @@ use postgres_types::{private::BytesMut, FromSql, IsNull, ToSql, Type as PsqlType
 #[cfg_attr(feature = "report", derive(Decode, Encode))]
 #[derive(Clone, Copy, Debug, Default, Hash, PartialEq, Eq)]
 pub struct MacAddress(pub [u8; 6]);
+
+impl FromStr for MacAddress {
+    type Err = ParseIntError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let mut mac = Self::default();
+        let iter = s.split(':').take(6);
+        for (slot, hex) in mac.0.iter_mut().zip(iter) {
+            *slot = u8::from_str_radix(hex, 16)?;
+        }
+        Ok(mac)
+    }
+}
 
 impl fmt::Display for MacAddress {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {

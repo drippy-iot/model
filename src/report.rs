@@ -1,4 +1,8 @@
 use bitcode::{Decode, Encode};
+use core::time::Duration;
+
+/// The ESP32 regularly pings the server.
+pub const POLL_QUANTUM: Duration = Duration::from_secs(3);
 
 /// This message is a ping from the unit on the detected flow rate.
 #[derive(Debug, Decode, Encode, PartialEq, Eq)]
